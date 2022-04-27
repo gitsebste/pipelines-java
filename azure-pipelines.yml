@@ -12,7 +12,7 @@ variables:
 
 pool:
   name: 'Default'
-  vmImage: $(vmImageName)
+  vmImage: 'ubuntu-latest'
   demands:
    - agent.name -equals mobile_workstation
 
@@ -23,7 +23,7 @@ stages:
   - job: MavenPackage
     displayName: Maven Package
     pool:
-      vmImage: $(vmImageName)
+      vmImage: 'ubuntu-latest'
 
     steps:
     - task: Maven@3
