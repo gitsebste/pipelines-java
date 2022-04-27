@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/sebemail/learn_azure_devops_pipeline/_apis/build/status/gitsebste.pipelines-java?branchName=master)](https://dev.azure.com/sebemail/learn_azure_devops_pipeline/_build/latest?definitionId=1&branchName=master)
 
 # Contributing
 
