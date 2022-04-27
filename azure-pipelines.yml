@@ -6,12 +6,8 @@
 trigger:
 - master
 
-variables:
-  vmImageName: 'ubuntu-latest'
-  poolName: Default
-
 pool:
-  name: 'Default'
+  name: Default
   vmImage: 'ubuntu-latest'
   demands:
    - agent.name -equals mobile_workstation
@@ -23,7 +19,10 @@ stages:
   - job: MavenPackage
     displayName: Maven Package
     pool:
+      name: Default
       vmImage: 'ubuntu-latest'
+      demands:
+       - agent.name -equals mobile_workstation
 
     steps:
     - task: Maven@3
