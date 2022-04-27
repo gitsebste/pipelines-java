@@ -11,7 +11,7 @@ variables:
   poolName: 'Default'
 
 pool:
-  name: $(poolName)
+  name: 'Default'
   vmImage: $(vmImageName)
   demands:
    - agent.name -equals mobile_workstation
