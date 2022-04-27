@@ -8,7 +8,7 @@ trigger:
 
 variables:
   vmImageName: 'ubuntu-latest'
-  poolName: 'Default'
+  poolName: Default
 
 pool:
   name: 'Default'
