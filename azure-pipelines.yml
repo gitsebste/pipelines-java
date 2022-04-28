@@ -8,7 +8,7 @@ trigger:
 
 pool:
   name: Default
-  vmImage: 'ubuntu-latest'
+  # vmImage: 'ubuntu-latest'
   demands:
    - agent.name -equals vm_mobile_workstation
 
@@ -20,7 +20,7 @@ stages:
     displayName: Maven Package
     pool:
       name: Default
-      vmImage: 'ubuntu-latest'
+      # vmImage: 'ubuntu-latest'
       demands:
        - agent.name -equals vm_mobile_workstation
 
