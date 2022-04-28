@@ -10,7 +10,7 @@ pool:
   name: Default
   vmImage: 'ubuntu-latest'
   demands:
-   - agent.name -equals mobile_workstation
+   - agent.name -equals vm_mobile_workstation
 
 stages:
 - stage: Build
@@ -22,7 +22,7 @@ stages:
       name: Default
       vmImage: 'ubuntu-latest'
       demands:
-       - agent.name -equals mobile_workstation
+       - agent.name -equals vm_mobile_workstation
 
     steps:
     - task: Maven@3
