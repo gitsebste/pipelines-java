@@ -40,8 +40,6 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
-          echo '$(pwd)'
-          echo '$(pwd)'
           echo  '$(System.DefaultWorkingDirectory)'
           dir
           echo  '$(Build.ArtifactStagingDirectory)'
@@ -78,7 +76,7 @@ stages:
               command: build
               Dockerfile: Dockerfile
           - task: CmdLine@2
-            name: VarStep
+            name: VarDefineStep
             inputs:
               script: |
                 docker run 
@@ -89,8 +87,12 @@ stages:
                 echo  '$(Build.ArtifactStagingDirectory)'
                 container_id=$(docker images | egrep -i '^pipelines-java )' | awk '{print $3}')
                 echo "##vso[task.setvariable variable=container_id]$container_id"
-                echo $(VarStep.foo)
-                docker run $(VarStep.foo)
+          - task: CmdLine@2
+            inputs:
+              script: |
+                echo $(VarDefineStep.foo)
+                docker run $(VarDefineStep.foo)
+            name: VarUseStep
           # - task: AzureWebApp@1
           #   displayName: 'Azure Web App Deploy: {{ webAppName }}'
           #   inputs:
