@@ -40,11 +40,12 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
-          echo pwd
-          echo pwd
+          echo '$(pwd)'
+          echo '$(pwd)'
           echo  '$(System.DefaultWorkingDirectory)'
           dir
-          dir subfoldername          
+          echo  '$(Build.ArtifactStagingDirectory)'
+          echo  '$(Build.ArtifactStagingDirectory)'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
