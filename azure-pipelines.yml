@@ -63,7 +63,7 @@ stages:
   jobs:
   - deployment: DeployLinuxWebApp
     displayName: Deploy Linux Web App
-    # environment: $(environmentName)
+    environment: $(environmentName)
     pool:
       name: Default
     strategy:
