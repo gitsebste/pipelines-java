@@ -88,8 +88,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: |
-                echo '$(VarDefineStep.foo)'
-                docker run '$(VarDefineStep.foo)'
+                echo $(VarDefineStep.foo)
+                docker run $(VarDefineStep.foo)
             name: VarUseStep
           # - task: AzureWebApp@1
           #   displayName: 'Azure Web App Deploy: {{ webAppName }}'
