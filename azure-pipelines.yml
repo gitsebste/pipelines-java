@@ -87,6 +87,7 @@ stages:
                 echo  '$(Build.ArtifactStagingDirectory)'
                 echo  '$(Build.ArtifactStagingDirectory)'
                 container_id=$(docker images | egrep -i '^pipelines-java )' | awk '{print $3}')
+                echo "##vso[task.setvariable variable=container_id]$container_id"
                 echo '$(container_id)'
                 docker run '$(container_id)'
           # - task: AzureWebApp@1
