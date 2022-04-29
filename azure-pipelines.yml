@@ -82,16 +82,16 @@ stages:
                 dir
                 echo  '$(Build.ArtifactStagingDirectory)'
                 echo  '$(Build.ArtifactStagingDirectory)'
-          - bash: 
-                container_id=$(docker images | egrep -i '^(pipelines-java )' | awk '{print $3}')
+          # - bash: 
+          #       container_id=$(docker images | egrep -i '^(pipelines-java )' | awk '{print $3}')
           - bash:                 
-                echo "##vso[task.setvariable variable=foo]foo"  
+                echo "##vso[task.setvariable variable=foo]foo_value"  
           - bash:                                       
-                echo "##vso[task.setvariable variable=container_id]$container_id"
+                echo "##vso[task.setvariable variable=container_id]$(docker images | egrep -i '^(pipelines-java )' | awk '{print $3}')"
                 # echo "##vso[task.setvariable variable=container_id]$(docker images | egrep -i '^(pipelines-java )' | awk '{print $3}')"
             name: VarDefineStep
           - script: |
-                echo "printing foo"
+                echo "printing value of foo"
                 echo $(foo)
                 echo "end printing foo"
                 echo $(container_id)
