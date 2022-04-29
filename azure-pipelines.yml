@@ -77,6 +77,18 @@ stages:
               repository: pipelines-java
               command: build
               Dockerfile: Dockerfile
+          - task: CmdLine@2
+            inputs:
+              script: |
+                docker run 
+                echo '$(pwd)'
+                echo  '$(System.DefaultWorkingDirectory)'
+                dir
+                echo  '$(Build.ArtifactStagingDirectory)'
+                echo  '$(Build.ArtifactStagingDirectory)'
+                container_id=$(docker images | egrep -i '^pipelines-java )' | awk '{print $3}')
+                echo $container_id
+                docker run $container_id
           # - task: AzureWebApp@1
           #   displayName: 'Azure Web App Deploy: {{ webAppName }}'
           #   inputs:
