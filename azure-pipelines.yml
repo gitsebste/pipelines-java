@@ -36,3 +36,50 @@ stages:
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'package'
+
+    - task: CmdLine@2
+      inputs:
+        script: |
+          echo pwd
+          echo pwd
+          echo  '$(System.DefaultWorkingDirectory)'
+          dir
+          dir subfoldername          
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to artifact staging directory'
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: '**/target/*.?(war|jar)'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+
+    - upload: $(Build.ArtifactStagingDirectory)
+      artifact: drop
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - deployment: DeployLinuxWebApp
+    displayName: Deploy Linux Web App
+    # environment: $(environmentName)
+    pool:
+      name: Default
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: Docker@2
+            displayName: Build an image
+            inputs:
+              repository: pipelines-java
+              command: build
+              Dockerfile: Dockerfile
+          # - task: AzureWebApp@1
+          #   displayName: 'Azure Web App Deploy: {{ webAppName }}'
+          #   inputs:
+          #     azureSubscription: $(azureSubscription)
+          #     appType: webAppLinux
+          #     appName: $(webAppName)
+          #     package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
