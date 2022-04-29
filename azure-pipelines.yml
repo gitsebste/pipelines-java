@@ -84,12 +84,12 @@ stages:
                 echo  '$(Build.ArtifactStagingDirectory)'
                 echo  '$(Build.ArtifactStagingDirectory)'
                 # container_id=$(docker images | egrep -i '^pipelines-java )' | awk '{print $3}')
-                echo "##vso[task.setvariable variable=container_id]$(docker images | egrep -i '^pipelines-java )' | awk '{print $3}')"
+                echo "##vso[task.setvariable variable=container_id]$(docker images | egrep -i '^(pipelines-java )' | awk '{print $3}')"
           - task: CmdLine@2
             inputs:
               script: |
-                echo $(VarDefineStep.foo)
-                docker run $(VarDefineStep.foo)
+                echo $(VarDefineStep.container_id)
+                docker run $(VarDefineStep.container_id)
             name: VarUseStep
           # - task: AzureWebApp@1
           #   displayName: 'Azure Web App Deploy: {{ webAppName }}'
