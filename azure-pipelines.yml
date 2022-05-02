@@ -30,8 +30,8 @@ stages:
           echo "##vso[task.setvariable variable=image_id]$(docker images | grep '$(app_name) ' | awk '{print $3}')"
         name: VarDefineStep
       - script: |
-              docker rm $(docker ps -a | grep '$(image_id)' | awk '{print $1}')
-              docker rmi $(image_id)
+              docker rm $(docker ps -a | grep '$(image_id)' | awk '{print $1}')  || true
+              docker rmi $(image_id) || true
 
   - deployment: DeployLinuxWebApp
     displayName: Deploy Linux Web App
