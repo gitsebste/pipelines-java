@@ -16,6 +16,24 @@ pool:
    - agent.name -equals vm_mobile_workstation
 
 stages:
+# docker images | grep 'pipelines-java ' | awk '{print $3}'
+- stage: Clean
+  jobs:
+  - job: Clean
+    displayName: Clean
+    pool:
+      name: Default
+      demands:
+       - agent.name -equals vm_mobile_workstation
+    steps:
+      - script: |
+                docker rmi $(docker images | grep '$(app_name) ' | awk '{print $3}')
+
+  - deployment: DeployLinuxWebApp
+    displayName: Deploy Linux Web App
+    environment: '$(app_name)'
+    pool:
+      name: Default
 - stage: Build
   displayName: Build stage
   jobs:
