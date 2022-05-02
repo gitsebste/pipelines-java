@@ -27,11 +27,11 @@ stages:
        - agent.name -equals vm_mobile_workstation
     steps:
       - bash:                                       
-          echo "##vso[task.setvariable variable=container_id]$(docker images | grep '$(app_name) ' | awk '{print $3}')"
+          echo "##vso[task.setvariable variable=image_id]$(docker images | grep '$(app_name) ' | awk '{print $3}')"
         name: VarDefineStep
       - script: |
-              docker rm $(docker ps -a | grep 'a08c73e930f4' | awk '{print $1}')
-              docker rmi $(container_id)
+              docker rm $(docker ps -a | grep '$(image_id)' | awk '{print $1}')
+              docker rmi $(image_id)
 
   - deployment: DeployLinuxWebApp
     displayName: Deploy Linux Web App
@@ -108,10 +108,10 @@ stages:
                 echo  '$(Build.ArtifactStagingDirectory)'
                 echo  '$(Build.ArtifactStagingDirectory)'
           - bash:                                       
-                echo "##vso[task.setvariable variable=container_id]$(docker images | egrep -i '^($(app_name) )' | awk '{print $3}')"
+                echo "##vso[task.setvariable variable=image_id]$(docker images | egrep -i '^($(app_name) )' | awk '{print $3}')"
             name: VarDefineStep
           - script: |
-                docker run $(container_id)
+                docker run $(image_id)
             name: VarUseStep
           # - task: AzureWebApp@1
           #   displayName: 'Azure Web App Deploy: {{ webAppName }}'
