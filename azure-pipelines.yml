@@ -6,6 +6,9 @@
 trigger:
 - master
 
+variables:
+  app_name: pipelines-java
+
 pool:
   name: Default
   # vmImage: 'ubuntu-latest'
@@ -62,7 +65,7 @@ stages:
   jobs:
   - deployment: DeployLinuxWebApp
     displayName: Deploy Linux Web App
-    environment: pipelines-java
+    environment: '$(app_name)'
     pool:
       name: Default
     strategy:
@@ -72,7 +75,7 @@ stages:
           - task: Docker@2
             displayName: Build an image
             inputs:
-              repository: pipelines-java
+              repository: '$(app_name)'
               command: build
               Dockerfile: Dockerfile
           - task: CmdLine@2            
@@ -83,7 +86,7 @@ stages:
                 echo  '$(Build.ArtifactStagingDirectory)'
                 echo  '$(Build.ArtifactStagingDirectory)'
           - bash:                                       
-                echo "##vso[task.setvariable variable=container_id]$(docker images | egrep -i '^(pipelines-java )' | awk '{print $3}')"
+                echo "##vso[task.setvariable variable=container_id]$(docker images | egrep -i '^($(app_name) )' | awk '{print $3}')"
             name: VarDefineStep
           - script: |
                 docker run $(container_id)
